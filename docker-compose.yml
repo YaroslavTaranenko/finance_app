@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    shm_size: 512mb
+    environment:
+      POSTGRES_PASSWORD: 1q2w
+    volumes:
+      - finance_vol:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: taranenkojaroslav@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1q2w
+    ports:
+      - 127.0.0.1:80:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+#  backend:
+#    image: openjdk:11-jdk-slim
+#    volumes:
+#      - ./backend:/app
+#    working_dir: /app
+#    command: ./mvnw spring-boot:run
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - db
+#
+#  client:
+#    image: node:lts-slim
+#    volumes:
+#      - ./client:/app
+#    working_dir: /app
+#    command: npm start
+#    ports:
+#      - 4200:4200
+
+volumes:
+  finance_vol:
+  pgadmin_data:
